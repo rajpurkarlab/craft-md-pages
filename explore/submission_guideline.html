@@ -4,15 +4,15 @@
 <head>
   <meta charset="utf-8"/>
   <title>
-    ReXrank
+    CRAFT-MD
   </title>
-  <meta name="description" content="ReXrank: The leading open-source leaderboard for radiology report generation. Compare and benchmark AI models for medical imaging reports."/>
-  <meta name="keywords" content="ReXrank, radiology, report generation, AI, medical imaging, leaderboard, benchmarking"/>
-  <meta property="og:title" content="ReXrank: Radiology Report Generation Leaderboard"/>
-  <meta property="og:description" content="Open-source leaderboard for comparing and benchmarking AI models in radiology report generation."/>
-  <meta property="og:url" content="https://rajpurkarlab.github.io/ReXrank/"/>
+  <meta name="description" content="CRAFT-MD: A Comprehensive Benchmarking Framework for Conversational Reasoning Assessment in Medicine."/>
+  <meta name="keywords" content="CRAFT-MD, conversational LLMs, evaluation, leaderboard, benchmarking"/>
+  <meta property="og:title" content="CRAFT-MD: Conversational Reasoning Assessment Framework for Testing in Medicine"/>
+  <meta property="og:description" content="A Comprehensive Benchmarking Framework for Conversational Reasoning Assessment in Medicine."/>
+  <meta property="og:url" content="https://rajpurkarlab.github.io/craft-md-pages/"/>
   <meta property="og:type" content="website"/>
-  <meta content="ReXrank is an open-source leaderboard for AI-powered radiology report generation from chest x-ray images." name="description"/>
+  <meta content="CRAFT-MD is a comprehensive multi-agent benchmarking framework for conversational reasoning assessment in Medicine." name="description"/>
   <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
   <meta content="../logo.png" property="og:image"/>
@@ -189,7 +189,7 @@
       </div>
       <div class="leftNav">
         <div class="brandDiv">
-          <a class="navbar-brand" href="../">ReXrank</a>
+          <a class="navbar-brand" href="../">CRAFT-MD</a>
         </div>
       </div>
     </div>
@@ -198,8 +198,8 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1 id="appTitle">ReXrank</h1>
-          <h2 id="appSubtitle">Chest X-ray Report Generation Leaderboard</h2>
+          <h1 id="appTitle">CRAFT-MD</h1>
+          <h2 id="appSubtitle">A Comprehensive Benchmarking Framework for Conversational Reasoning Assessment in Medicine.</h2>
           <!-- https://github.com/rajpurkarlab/ReXrank/blob/main/example_files/submission_tutorial.md -->
           <!-- <h3 id="helpLink"><a href="./explore/submission_guideline.html" target="_blank" rel="noopener noreferrer">⭐@Researchers: Submit to ReXrank Now!</a></h3> -->
           <!-- <h3 id="helpLink"><a href="https://forms.office.com/r/1wDsy2MmAM" target="_blank" rel="noopener noreferrer">⭐@Researchers: Submit to ReXrank Now!</a></h3> -->
@@ -215,43 +215,41 @@
             <div class="infoCard">
                 <div class="infoBody">
                     <div class="infoHeadline">
-                        <h2>ReXrank Submission Guideline (Round 1)</h2>
+                        <h2>CRAFT-MD Submission Guideline (Round 1)</h2>
                     </div>
                     <p>
-                      The ReXrank Challenge is a  competition in chest X-ray report generation leveraging ReXGradient, our comprehensive multi-institutional dataset, running from December 1, 2024, to March 1, 2025.
+                      The CRAFT-MD Challenge is a competition to evaluate the clinical reasoning ability of LLMs, running from January 2, 2025, to April 2, 2025.
                       The competition welcomes participation from academic institutions, industry professionals, and independent researchers worldwide. 
-                      We will evaluate the performance of the models from multiple critical dimensions, including clinical accuracy and generalization capability across diverse institutions. 
-                      A panel of distinguished radiologists will conduct thorough assessments of the highest-performing models. 
-                      Top-performing participants will be invited to collaborate on <b>future research initiatives and model development</b>.
+                      Are you developing a new model that can beat the existing LLMs in clinical conversational reasoning? Submit your model to the CRAFT-MD leaderboard now!
                     </p>
 
-                    <div class="infoHeadline">
+                    <!-- <div class="infoHeadline">
                         <h2>Getting Started</h2>
-                    </div>
-                    <p>
+                    </div> -->
+                    <!-- <p>
                         To evaluate your models, we made available the <a href="https://github.com/rajpurkarlab/ReXrank/blob/main/example_files/evaluation_script.md", target="_blank">evaluation script</a> we will use for official evaluation, along with a sample prediction file that the script will take as input.
                         To run the evaluation, use
                         <code>python evaluate.py &lt;path_to_data&gt; &lt;path_to_predictions&gt;</code>.
-                    </p>
+                    </p> -->
 
                     <div class="infoHeadline">
-                        <h2>Submission Guidelines</h2>
+                        <h2>Model Submission Guidelines</h2>
                     </div>
-                      <p><b>1. Evaluating on the MIMIC-CXR Test Set</b></p>
-                      <p>To achieve a consistent score with our leaderboard, please use the official MIMIC-CXR test split. You can download the file from  <a href="https://physionet.org/content/mimic-cxr/2.0.0/", target="_blank">here</a>. We evaluate at the study level. If the submitted model can input multiple images, we will input all images of a study. If the submitted model includes only one image, we will default to using the frontal image. We also include context information like patient age, patient gender, indication and comparison. When submission, you can select if you are going to use this info.</p>
+                      <!-- <p><b>1. Evaluating on the MIMIC-CXR Test Set</b></p>
+                      <p>To achieve a consistent score with our leaderboard, please use the official MIMIC-CXR test split. You can download the file from  <a href="https://physionet.org/content/mimic-cxr/2.0.0/", target="_blank">here</a>. We evaluate at the study level. If the submitted model can input multiple images, we will input all images of a study. If the submitted model includes only one image, we will default to using the frontal image. We also include context information like patient age, patient gender, indication and comparison. When submission, you can select if you are going to use this info.</p> -->
 
-                      <p><b>2. Model Submission</b></p>
-                      <p>Your model submission should include the following:</p>
+                      <!-- <p><b>2. Model Submission</b></p> -->
+                      <p>Models can be submitted via <a href="mailto:sjohri@g.harvard.edu" target="_blank">email</a>. Your model submission should include the following:</p>
                       <ol>
                           <li><b>Model Description:</b> This description identifies your submission on the leaderboard: Name of the model, Institution, Paper link, Code link, Year.</li>
                           <li><b>Conda Environment File:</b> Include the <code>environment.yaml</code> file support <code>conda install</code>.</li>
-                          <li><b>Inference Script:</b> The model should support the command: <code>python inference.py &lt;input_json_file&gt; &lt;output_json_file&gt; &lt;img_root_dir&gt;</code> We provide an <a href="https://github.com/xiaoman-zhang/ReXrank/blob/gh-pages/example_files/merversa_inference.py", target="_blank">example</a> of <a href="https://huggingface.co/hyzhou/MedVersa_Internal", target="_blank">MedVersa</a> for understanding our requirements.</li>
-                          <li><b>Evaluation Result:</b> Include the evaluation result on the MIMIC-CXR test set. We will contact you if we are unable to replicate these results.</li>
+                          <!-- <li><b>Inference Script:</b> The model should support the command: <code>python inference.py &lt;input_json_file&gt; &lt;output_json_file&gt; &lt;img_root_dir&gt;</code> We provide an <a href="https://github.com/xiaoman-zhang/ReXrank/blob/gh-pages/example_files/merversa_inference.py", target="_blank">example</a> of <a href="https://huggingface.co/hyzhou/MedVersa_Internal", target="_blank">MedVersa</a> for understanding our requirements.</li> -->
+                          <!-- <li><b>Evaluation Result:</b> Include the evaluation result on the MIMIC-CXR test set. We will contact you if we are unable to replicate these results.</li> -->
                       </ol>
 
                     <div class="infoHeadline"></div>
                     <p>
-                        Any questions or concerns? Please reach out to us with <a href="mailto:xiaomanzhang.zxm@gmail.com" target="_blank">email</a>.
+                        Any questions or concerns? Please reach out to us with <a href="mailto:sjohri@g.harvard.edu" target="_blank">email</a>.
                     </p>
                 </div>
             </div>
