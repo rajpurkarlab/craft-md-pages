@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<!--Author: Xiaoman Zhang 2024 -->
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>
+    CRAFT-MD
+  </title>
+  <meta name="google-site-verification" content="nhtTEYeNrlo4w3RA5TuRR338uGFQGDhhSYAFEBA301c" />
+  <meta name="description" content="CRAFT-MD: A Comprehensive Benchmarking Framework for Conversational Reasoning Assessment in Medicine."/>
+  <meta name="keywords" content="CRAFT-MD, conversational LLMs, evaluation, leaderboard, benchmarking"/>
+  <meta property="og:title" content="CRAFT-MD: Conversational Reasoning Assessment Framework for Testing in Medicine"/>
+  <meta property="og:description" content="A Comprehensive Benchmarking Framework for Conversational Reasoning Assessment in Medicine."/>
+  <meta property="og:url" content="https://rajpurkarlab.github.io/CRAFT-MD/"/>
+  <meta property="og:type" content="website"/>
+  <html lang="en"></html>
+  <meta content="CRAFT-MD is a comprehensive multi-agent benchmarking framework for conversational reasoning assessment in Medicine." name="description"/>
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+  <meta content="/logo.png" property="og:image"/>
+  <link href="./logo.png" rel="image_src" type="image/png"/>
+  <link href="./favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+  <link href="./favicon.ico" rel="icon" type="image/x-icon"/>
+  <link href="./bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="./stylesheets/layout.css" rel="stylesheet"/>
+  <link href="./stylesheets/index.css" rel="stylesheet"/>
+  <script src="./javascripts/analytics.js"></script>
+  <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="./javascripts/jquery.tablesorter.min.js"></script>
+  <link rel="stylesheet" href="./stylesheets/theme.default.min.css">
+
+  <script async="" defer="" src="https://buttons.github.io/buttons.js"></script>
+  <link rel="canonical" href="https://craft-md.azurewebsites.net/" />
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "CRAFT-MD",
+      "description": "A Comprehensive Benchmarking Framework for Conversational Reasoning Assessment in Medicine.",
+      "url": "https://craft-md.azurewebsites.net/",
+      "keywords": ["CRAFT-MD", "conversational LLMs", "evaluation", "leaderboard", "benchmarking"]      
+    }
+  </script>
+
+  <style>
+    .fixed-height-table {
+      height: 420px; /* 固定高度，可根据需要调整 */
+      overflow-y: scroll;
+      display: block;
+    }
+    .fixed-height-table thead {
+      position: sticky;
+      top: 0;
+      background-color: white; /* 表头背景色 */
+      z-index: 1;
+    }
+    .fixed-height-table th, .fixed-height-table td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    .justified-text {
+      text-align: justify;
+      text-justify: inter-word;
+    }
+  </style>
+  <style>
+    .performanceTable th {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar navbar-default navbar-fixed-top" id="topNavbar" role="navigation">
+    <div class="container clearfix" id="navContainer">
+      <div class="rightNav">
+        <div class="collapseDiv">
+          <button aria-controls="navbar" aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button">
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="./" style="font-size: 18px;">Home</a>
+            </li>
+            <!-- <li>
+              <a href="./explore/vote_example.html" style="font-size: 18px;">Arena</a>
+            </li>
+            <li>
+              <a href="./explore/login.html" style="font-size: 18px;">Login</a>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+      <div class="leftNav">
+        <div class="brandDiv">
+          <a class="navbar-brand" href="./">CRAFT-MD</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cover" id="topCover">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 id="appTitle">CRAFT-MD</h1>
+          <h2 id="appSubtitle">A Conversational Reasoning Assessment Framework for Testing in Medicine.</h2>
+          <!-- <h3 id="helpLink"><a href="./explore/submission_guideline.html" target="_blank" rel="noopener noreferrer">⭐@Researchers: Submit to ReXrank before March 1, 2025</a></h3> -->
+          <!-- <p><a href="https://forms.gle/qNUXgXpmDnhUprjF8" target="_blank" rel="noopener noreferrer">Wanna help us?</a></p> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cover" id="contentCover">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <div class="infoCard">
+            <div class="infoBody justified-text">
+              <div class="infoHeadline">
+                <h2>What is CRAFT-MD?</h2>
+              </div>
+              <p>
+              <b>CRAFT-MD</b> is a comprehensive evaluation framework designed to test the conversational reasoning abilities of clinical Large Language Models (LLMs) beyond traditional accuracy measured using MCQs. </p>
+              <p> It simulates doctor-patient interactions, where the clinical-LLM's performance in gathering medical histories, synthesizing information, and forming accurate diagnoses is assessed by a multi-agent setup involving a patient-AI, a grader-AI, and medical experts who validate the results. </p>
+              <p> CRAFT-MD is designed to be flexible and scalable, allowing for the integration of new datasets and the evaluation of emerging models. </p>
+              <!-- <p style="margin-bottom: 20px;"><b>Join us</b> in shaping the future of AI-assisted radiology. Develop your models, submit your results, and see how you stack up against the best in the field. Together, we can push the boundaries of what's possible in medical imaging and report generation. </p> -->
+                <!-- <p style="margin-bottom: 20px;">
+                  <strong> ⭐ <a href="./explore/submission_guideline.html">Submit your models</a> for evaluation with CRAFT-MD</strong>.
+              </p> -->
+              </p>
+              <!-- <p>
+                <span>⭐ <b>News!</b></span> Click <a href="./explore/vote_example.html">here</a> to vote for the models!
+              </p> -->
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-md-5">
+          <div class="infoCard">
+            <div class="infoBody">
+              <div class="infoHeadline">
+                <h2>Getting Started</h2>
+              </div>
+              <p>
+                To evaluate your models, we made available the evaluation script we will use for official evaluation, along with a sample prediction file that the script will take as input.
+                To run the evaluation, use
+                <code>
+                  python evaluate.py &lt;path_to_data&gt; &lt;path_to_predictions&gt;
+                </code>.
+              </p>
+              <ul class="list-unstyled">
+                <li>
+                  <a class="btn actionBtn inverseBtn" download="" href="https://github.com/rajpurkarlab/ReXrank/blob/main/example_files/evaluation_script.md" target="_blank">Evaluation Script</a>
+                </li>                
+                <li>
+                  <a class="btn actionBtn inverseBtn" download="" href="https://github.com/rajpurkarlab/ReXrank/blob/main/example_files/prediction.json" target="_blank">Sample Prediction File</a>
+                </li>
+              </ul>
+              <p>
+                Once you have a built a model that works to your expectations on the MIMIC-CXR test set, you submit it to get official scores on our Private test set. Here's a tutorial on the submission for a smooth evaluation process.
+              </p>
+              <a class="btn actionBtn inverseBtn" href="https://github.com/rajpurkarlab/ReXrank/blob/main/example_files/submission_tutorial.md" target="_blank">Submission Tutorial</a>
+              <p>
+                Please <b><a href="https://github.com/rajpurkarlab/ReXrank/blob/main/cite.txt" target="_blank">cite</a> </b>if you find our leaderboard helpful. </p>
+              <p> To keep up to date with major changes to the leaderboard and dataset, please <b><a href="https://forms.gle/bZpsPUccYF1Th7Xv9" target="_blank">subscribe</a></b> here ! 
+              </p>
+            </div>
+          </div>
+        </div> -->
+    <div class="col-md-5">
+      <div class="infoCard">
+        <div class="infoBody">
+          <div class="infoHeadline">
+            <h2>Leaderboard Overview</h2>
+          </div>
+          <p>Evaluation dataset-wise model performance.</p>
+          <div class="fixed-height-table">
+            <table class="table performanceTable">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Combined Dataset</th>
+                  <!-- <th>Derm-Public</th>
+                  <th>Derm-Private</th> -->
+                  <!-- <th>CheXpert Plus</th> -->
+                </tr>
+              </thead>
+              <tbody>
+            <tr><td><p>1</p></td>
+            <td style="word-break:break-word;">
+              <a class="link" href
+              "https://openai.com/index/introducing-openai-o1-preview/">O1-preview-0912</a>
+              <p class="institution">OpenAI</p>
+            </td>
+            
+            </tr><tr><td><p>2</p></td>
+            <td style="word-break:break-word;">
+              <a class="link" href
+              "https://openai.com/index/hello-gpt-4o/">GPT-4o</a>
+              <p class="institution">OpenAI</p>
+            </td>
+            
+            </tr><tr><td><p>3</p></td>
+            <td style="word-break:break-word;">
+              <a class="link" href
+              "https://openai.com/index/openai-o1-mini-advancing-cost-efficient-reasoning/">O1-mini-0912</a>
+              <p class="institution">OpenAI</p>
+            </td>
+            
+            </tr><tr><td><p>4</p></td>
+            <td style="word-break:break-word;">
+              <a class="link" href
+              "https://openai.com/index/gpt-4/">GPT-4-1106</a>
+              <p class="institution">OpenAI</p>
+            </td>
+            
+            </tr><tr><td><p>5</p></td>
+            <td style="word-break:break-word;">
+              <a class="link" href
+              "https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct">LLaMA-3.1-8b</a>
+              <p class="institution">Meta</p>
+            </td>
+            
+            </tr><tr><td><p>6</p></td>
+            <td style="word-break:break-word;">
+              <a class="link" href
+              "https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct">LLaMA-3-8b</a>
+              <p class="institution">Meta</p>
+            </td>            
+
+            </tr><tr><td><p>7</p></td>
+            <td style="word-break:break-word;">
+              <a class="link" href
+              "https://openai.com/index/gpt-3-5-turbo-fine-tuning-and-api-updates/">GPT-3.5-1106</a>
+              <p class="institution">CSIRO</p>
+            </td>            
+
+            </tr><tr><td><p>8</p></td>
+            <td style="word-break:break-word;">
+              <a class="link" href
+              "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct">Qwen-2.5-7b</a>
+              <p class="institution">Qwen</p>
+            </td>
+            
+            </tr><tr><td><p>9</p></td>
+            <td style="word-break:break-word;">
+              <a class="link" href
+              "https://huggingface.co/Qwen/Qwen2-7B-Instruct">Qwen-2-7b</a>
+              <p class="institution">Qwen</p>
+            </td>
+            
+            </tr><tr><td><p>10</p></td>
+            <td style="word-break:break-word;">
+              <a class="link" href
+              "https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1">Mistral-v1</a>
+              <p class="institution">Mistral AI</p>
+            </td>
+
+            </tr><tr><td><p>11</p></td>
+            <td style="word-break:break-word;">
+              <a class="link" href
+              "https://github.com/taokz/BiomedGPT">LLaMA-2-7b</a>
+              <p class="institution">Meta</p>
+            </td> 
+
+            </tr><tr><td><p>12</p></td>
+            <td style="word-break:break-word;">
+              <a class="link" href
+              "https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2">Mistral-v2</a>
+              <p class="institution">Mistral AI</p>
+            </td>
+            
+            </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <div class="col-md-12">
+      <div class="infoCard">
+        <div class="infoBody">
+          <div class="infoHeadline">
+            <h2>Combined Leaderboard</h2>
+          </div>
+          <div>
+            <p> Performance on CRAFT-MD evaluation set (n=2000) </p>
+          </div>
+          <div style="margin-top: 5px;">
+            <button id="testBtnPrivate" class="btn btn-black">FRQs</button>
+            <button id="validBtnPrivate" class="btn btn-gray">4-choice MCQs</button>
+          </div>
+          <table class="table performanceTable tablesorter" id="modelTablePrivate">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Model</th>
+                <th>Vignette <b>↑</b></th>
+                <th>Multi-turn Conversation <b>↑</b></th>
+                <th>Single-turn Conversation <b>↑</b></th>
+                <th>Summarized Conversation <b>↑</b></th>
+                <!-- <th>Multi-turn-3 <b>↑</b></th>
+                <th>Multi-turn-4 <b>↑</b></th>
+                <th>GREEN <b>↑</b></th>
+                <th>1/FineRadScore <b>↑</b></th> -->
+              </tr>
+            </thead>
+            <tbody id="testResultsPrivate">
+      
+                <tr>
+                  <td>
+                    <p>1</p>
+                    <span class="date label label-default">2024</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://openai.com/index/introducing-openai-o1-preview/">O1-preview-0912</a>
+                    <p class="institution">OpenAI</p>
+                  </td>
+                  <td><b>0.51</b></td>
+                  <td><b>0.365</b></td>
+                  <td><b>0.212</b></td>
+                  <td><b>0.321</b></td>
+                </tr>
+          
+                <tr>
+                  <td>
+                    <p>2</p>
+                    <span class="date label label-default">2024</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://openai.com/index/hello-gpt-4o/">GPT-4o</a>
+                    <p class="institution">OpenAI</p>
+                  </td>
+                  <td><b>0.562</b></td>
+                  <td><b>0.335</b></td>
+                  <td><b>0.191</b></td>
+                  <td><b>0.35</b></td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <p>3</p>
+                    <span class="date label label-default">2024</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="hhttps://openai.com/index/openai-o1-mini-advancing-cost-efficient-reasoning/">O1-mini-0912</a>
+                    <p class="institution">OpenAI</p>
+                  </td>
+                  <td><b>0.601</b></td>
+                  <td><b>0.301</b></td>
+                  <td><b>0.131</b></td>
+                  <td><b>0.305</b></td>
+                </tr>
+          
+                <tr>
+                  <td>
+                    <p>4</p>
+                    <span class="date label label-default">2023</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://github.com/Stanford-AIMI/chexpert-plus">GPT-4-1106</a>
+                    <p class="institution">OpenAI</p>
+                  </td>
+                  <td><b>0.486</b></td>
+                  <td><b>0.264</b></td>
+                  <td><b>0.133</b></td>
+                  <td><b>0.272</b></td>
+                </tr>
+          
+                <tr>
+                  <td>
+                    <p>5</p>
+                    <span class="date label label-default">2024</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct">LLaMA-3.1-8b</a>
+                    <p class="institution">Meta</p>
+                  </td>
+                  <td><b>0.346</b></td>
+                  <td><b>0.187</b></td>
+                  <td><b>0.116</b></td>
+                  <td><b>0.163</b></td>
+                </tr>
+          
+                <tr>
+                  <td>
+                    <p>6</p>
+                    <span class="date label label-default">2024</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct">LLaMA-3-8b</a>
+                    <p class="institution">Meta</p>
+                  </td>
+                  <td><b>0.291</b></td>
+                  <td><b>0.174</b></td>
+                  <td><b>0.117</b></td>
+                  <td><b>0.16</b></td>
+                </tr>
+          
+                <tr>
+                  <td>
+                    <p>7</p>
+                    <span class="date label label-default">2023</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://openai.com/index/gpt-3-5-turbo-fine-tuning-and-api-updates/">GPT-3.5-1106</a>
+                    <p class="institution">OpenAI</p>
+                  </td>
+                  <td><b>0.375</b></td>
+                  <td><b>0.169</b></td>
+                  <td><b>0.123</b></td>
+                  <td><b>0.174</b></td>
+                </tr>
+          
+                <tr>
+                  <td>
+                    <p>8</p>
+                    <span class="date label label-default">2024</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://huggingface.co/Qwen/Qwen2.5-7B-Instruct">Qwen-2.5-7b</a>
+                    <p class="institution">Qwen</p>
+                  </td>
+                  <td><b>0.242</b></td>
+                  <td><b>0.117</b></td>
+                  <td><b>0.099</b></td>
+                  <td><b>0.098</b></td>
+                </tr>
+          
+                <tr>
+                  <td>
+                    <p>9</p>
+                    <span class="date label label-default">2024</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://huggingface.co/Qwen/Qwen2-7B-Instruct">Qwen-2-7b</a>
+                    <p class="institution">Qwen</p>
+                  </td>
+                  <td><b>0.174</b></td>
+                  <td><b>0.078</b></td>
+                  <td><b>0.07</b></td>
+                  <td><b>0.065</b></td>
+                </tr>
+          
+                <tr>
+                  <td>
+                    <p>10</p>
+                    <span class="date label label-default">2023</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1">Mistral-v0.1</a>
+                    <p class="institution">Mistral AI</p>
+                  </td>
+                  <td><b>0.174</b></td>
+                  <td><b>0.078</b></td>
+                  <td><b>0.062</b></td>
+                  <td><b>0.083</b></td>
+                </tr>
+          
+                <tr>
+                  <td>
+                    <p>11</p>
+                    <span class="date label label-default">2023</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://github.com/WissingChen/VLCI">LLaMA-2-7b</a>
+                    <p class="institution">Meta</p>
+                  </td>
+                  <td><b>0.169</b></td>
+                  <td><b>0.066</b></td>
+                  <td><b>0.065</b></td>
+                  <td><b>0.081</b></td>
+                </tr>
+          
+                <tr>
+                  <td>
+                    <p>12</p>
+                    <span class="date label label-default">2023</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2">Mistral-v0.2</a>
+                    <p class="institution">Mistral AI</p>
+                  </td>
+                  <td><b>0.222</b></td>
+                  <td><b>0.066</b></td>
+                  <td><b>0.056</b></td>
+                  <td><b>0.056</b></td>
+                </tr>
+
+              </tbody>
+              <tbody id="validResultsPrivate" style="display: none;">
+      
+                <tr>
+                  <td>
+                    <p>1</p>
+                    <span class="date label label-default">2024</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://openai.com/index/introducing-openai-o1-preview/">O1-preview-0912</a>
+                    <p class="institution">OpenAI</p>
+                  </td>
+                  <td><b>0.931</b></td>
+                  <td><b>0.745</b></td>
+                  <td><b>0.624</b></td>
+                  <td><b>0.768</b></td>
+                </tr>
+          
+                <tr>
+                  <td>
+                    <p>2</p>
+                    <span class="date label label-default">2024</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://openai.com/index/hello-gpt-4o/">GPT-4o</a>
+                    <p class="institution">OpenAI</p>
+                  </td>
+                  <td><b>0.879</b></td>
+                  <td><b>0.68</b></td>
+                  <td><b>0.57</b></td>
+                  <td><b>0.729</b></td>
+                </tr>
+          
+                <tr>
+                  <td>
+                    <p>3</p>
+                    <span class="date label label-default">2024</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://openai.com/index/openai-o1-mini-advancing-cost-efficient-reasoning/">O1-mini-0912</a>
+                    <p class="institution">OpenAI</p>
+                  </td>
+                  <td><b>0.899</b></td>
+                  <td><b>0.639</b></td>
+                  <td><b>0.508</b></td>
+                  <td><b>0.688</b></td>
+                </tr>
+          
+                <tr>
+                  <td>
+                    <p>4</p>
+                    <span class="date label label-default">2024</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://github.com/Stanford-AIMI/chexpert-plus">GPT-4-1106</a>
+                    <p class="institution">OpenAI</p>
+                  </td>
+                  <td><b>0.821</b></td>
+                  <td><b>0.627</b></td>
+                  <td><b>0.52</b></td>
+                  <td><b>0.671</b></td>
+                </tr>
+          
+                <tr>
+                  <td>
+                    <p>5</p>
+                    <span class="date label label-default">2024</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct">LLaMA-3.1-8b</a>
+                    <p class="institution">Meta</p>
+                  </td>
+                  <td><b>0.723</b></td>
+                  <td><b>0.51</b></td>
+                  <td><b>0.421</b></td>
+                  <td><b>0.56</b></td>
+                </tr>
+          
+                <tr>
+                  <td>
+                    <p>6</p>
+                    <span class="date label label-default">2024</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct">LLaMA-3-8b</a>
+                    <p class="institution">Meta</p>
+                  </td>
+                  <td><b>0.688</b></td>
+                  <td><b>0.497</b></td>
+                  <td><b>0.417</b></td>
+                  <td><b>0.54</b></td>
+                </tr>
+  
+                <tr>
+                  <td>
+                    <p>7</p>
+                    <span class="date label label-default">2024</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://openai.com/index/gpt-3-5-turbo-fine-tuning-and-api-updates/">GPT-3.5-1106</a>
+                    <p class="institution">OpenAI</p>
+                  </td>
+                  <td><b>0.659</b></td>
+                  <td><b>0.467</b></td>
+                  <td><b>0.435</b></td>
+                  <td><b>0.509</b></td>
+                </tr>
+  
+                <tr>
+                  <td>
+                    <p>8</p>
+                    <span class="date label label-default">2024</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://huggingface.co/Qwen/Qwen2.5-7B-Instruct">Qwen-2.5-7b</a>
+                    <p class="institution">Qwen</p>
+                  </td>
+                  <td><b>0.66</b></td>
+                  <td><b>0.437</b></td>
+                  <td><b>0.411</b></td>
+                  <td><b>0.465</b></td>
+                </tr>
+  
+                <tr>
+                  <td>
+                    <p>9</p>
+                    <span class="date label label-default">2024</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2">Mistral-v0.2</a>
+                    <p class="institution">Mistral AI</p>
+                  </td>
+                  <td><b>0.637</b></td>
+                  <td><b>0.426</b></td>
+                  <td><b>0.448</b></td>
+                  <td><b>0.513</b></td>
+                </tr>
+  
+                <tr>
+                  <td>
+                    <p>10</p>
+                    <span class="date label label-default">2024</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://huggingface.co/Qwen/Qwen2-7B-Instruct">Qwen-2-7b</a>
+                    <p class="institution">Qwen</p>
+                  </td>
+                  <td><b>0.591</b></td>
+                  <td><b>0.363</b></td>
+                  <td><b>0.355</b></td>
+                  <td><b>0.431</b></td>
+                </tr>
+  
+                <tr>
+                  <td>
+                    <p>11</p>
+                    <span class="date label label-default">2024</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1">Mistral-v0.1</a>
+                    <p class="institution">Mistral AI</p>
+                  </td>
+                  <td><b>0.441</b></td>
+                  <td><b>0.331</b></td>
+                  <td><b>0.324</b></td>
+                  <td><b>0.361</b></td>
+                </tr>
+  
+                <tr>
+                  <td>
+                    <p>12</p>
+                    <span class="date label label-default">2023</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://huggingface.co/meta-llama/Llama-2-7B-Instruct">LLaMA-2-7b</a>
+                    <p class="institution">Meta</p>
+                  </td>
+                  <td><b>0.395</b></td>
+                  <td><b>0.319</b></td>
+                  <td><b>0.304</b></td>
+                  <td><b>0.335</b></td>
+                </tr>
+  
+                <!-- <tr>
+                  <td>
+                    <p>13</p>
+                    <span class="date label label-default">2024</span>
+                  </td>
+                  <td style="word-break:break-word;">
+                    <a class="link" href="https://cdn.openai.com/papers/GPTV_System_Card.pdf">GPT4V</a>
+                    <p class="institution">OpenAI</p>
+                  </td>
+                  <td><b>0.605</b></td>
+                  <td><b>0.072</b></td>
+                  <td><b>0.214</b></td>
+                  <td><b>0.364</b></td>
+                  <td><b>0.175</b></td>
+                  <td><b>0.456</b></td>
+                  <td><b>0.356</b></td>
+                  <td><b>0.423</b></td>
+                </tr> -->
+          
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+     
+    <!-- <div class="col-md-12">
+    <div class="infoCard">
+      <div class="infoBody">
+        <div class="infoHeadline">
+          <h2>Leaderboard on CheXpert Plus Dataset</h2>
+        </div>
+        <div>
+          <p> <a class="link" href="https://stanfordaimi.azurewebsites.net/datasets/5158c524-d3ab-4e02-96e9-6ee9efc110a1">CheXpert Plus </a> contains 223,228 unique pairs of radiology reports and chest X-rays from 187,711 studies and 64,725 patients. We follow the official split of CheXpert Plus in the following experiments and use the valid set for evaluation. * denotes the model was trained on CheXpert Plus.</p>
+        </div>
+        <div style="margin-top: 5px;">
+          <button id="testBtnCheXpert" class="btn btn-black">Findings</button>
+          <button id="validBtnCheXpert" class="btn btn-gray">Findings + Impression</button>
+        </div>
+        <table class="table performanceTable tablesorter" id="modelTableCheXpert">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Model</th>
+              <th>1/RadCliQ-v1 <b>↑</b></th>
+              <th>BLEU <b>↑</b></th>
+              <th>BertScore <b>↑</b></th>
+              <th>SembScore <b>↑</b></th>
+              <th>RadGraph <b>↑</b></th>
+              <th>RaTEScore <b>↑</b></th>
+              <th>GREEN <b>↑</b></th>
+              <th>1/FineRadScore <b>↑</b></th>
+            </tr>
+          </thead>
+          <tbody id="testResultsCheXpert">
+    
+              <tr>
+                <td>
+                  <p>1</p>
+                  <span class="date label label-default">2024</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://github.com/Stanford-AIMI/CheXagent">CheXagent</a>
+                  <p class="institution">Stanford</p>
+                </td>
+                <td><b>0.638</b></td>
+                <td><b>0.123</b></td>
+                <td><b>0.278</b></td>
+                <td><b>0.269</b></td>
+                <td><b>0.125</b></td>
+                <td><b>0.434</b></td>
+                <td><b>0.183</b></td>
+                <td><b>0.341</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>2</p>
+                  <span class="date label label-default">2024</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://github.com/Stanford-AIMI/chexpert-plus">CheXpertPlus_MIMIC</a>
+                  <p class="institution">Stanford</p>
+                </td>
+                <td><b>0.663</b></td>
+                <td><b>0.14</b></td>
+                <td><b>0.292</b></td>
+                <td><b>0.294</b></td>
+                <td><b>0.134</b></td>
+                <td><b>0.43</b></td>
+                <td><b>0.238</b></td>
+                <td><b>0.344</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>3</p>
+                  <span class="date label label-default">2024</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://github.com/Stanford-AIMI/chexpert-plus">CheXpertPlus_CheX*</a>
+                  <p class="institution">Stanford</p>
+                </td>
+                <td><b>0.786</b></td>
+                <td><b>0.15</b></td>
+                <td><b>0.342</b></td>
+                <td><b>0.377</b></td>
+                <td><b>0.191</b></td>
+                <td><b>0.487</b></td>
+                <td><b>0.237</b></td>
+                <td><b>0.343</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>4</p>
+                  <span class="date label label-default">2024</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://github.com/Stanford-AIMI/chexpert-plus">CheXpertPlus_CheX_MIMIC*</a>
+                  <p class="institution">Stanford</p>
+                </td>
+                <td><b>0.808</b></td>
+                <td><b>0.153</b></td>
+                <td><b>0.335</b></td>
+                <td><b>0.404</b></td>
+                <td><b>0.207</b></td>
+                <td><b>0.497</b></td>
+                <td><b>0.274</b></td>
+                <td><b>0.348</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>5</p>
+                  <span class="date label label-default">2023</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://github.com/aehrc/cvt2distilgpt2">Cvt2distilgpt2_MIMIC</a>
+                  <p class="institution">CSIRO</p>
+                </td>
+                <td><b>0.626</b></td>
+                <td><b>0.124</b></td>
+                <td><b>0.267</b></td>
+                <td><b>0.266</b></td>
+                <td><b>0.119</b></td>
+                <td><b>0.42</b></td>
+                <td><b>0.215</b></td>
+                <td><b>0.346</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>6</p>
+                  <span class="date label label-default">2023</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://github.com/aehrc/cvt2distilgpt2">Cvt2distilgpt2_IU</a>
+                  <p class="institution">CSIRO</p>
+                </td>
+                <td><b>0.577</b></td>
+                <td><b>0.084</b></td>
+                <td><b>0.267</b></td>
+                <td><b>0.155</b></td>
+                <td><b>0.098</b></td>
+                <td><b>0.382</b></td>
+                <td><b>0.147</b></td>
+                <td><b>0.332</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>7</p>
+                  <span class="date label label-default">2024</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://huggingface.co/hyzhou/MedVersa/tree/main">MedVersa</a>
+                  <p class="institution">Harvard</p>
+                </td>
+                <td><b>0.719</b></td>
+                <td><b>0.129</b></td>
+                <td><b>0.323</b></td>
+                <td><b>0.344</b></td>
+                <td><b>0.147</b></td>
+                <td><b>0.47</b></td>
+                <td><b>0.243</b></td>
+                <td><b>0.343</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>8</p>
+                  <span class="date label label-default">2023</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://github.com/chaoyi-wu/RadFM">RadFM</a>
+                  <p class="institution">SJTU</p>
+                </td>
+                <td><b>0.572</b></td>
+                <td><b>0.081</b></td>
+                <td><b>0.235</b></td>
+                <td><b>0.216</b></td>
+                <td><b>0.08</b></td>
+                <td><b>0.396</b></td>
+                <td><b>0.096</b></td>
+                <td><b>0.333</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>9</p>
+                  <span class="date label label-default">2023</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://github.com/ChantalMP/RaDialog">RaDialog</a>
+                  <p class="institution">TUM</p>
+                </td>
+                <td><b>0.709</b></td>
+                <td><b>0.131</b></td>
+                <td><b>0.312</b></td>
+                <td><b>0.353</b></td>
+                <td><b>0.138</b></td>
+                <td><b>0.445</b></td>
+                <td><b>0.211</b></td>
+                <td><b>0.333</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>10</p>
+                  <span class="date label label-default">2023</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://github.com/ttanida/rgrg">RGRG</a>
+                  <p class="institution">TUM</p>
+                </td>
+                <td><b>0.674</b></td>
+                <td><b>0.154</b></td>
+                <td><b>0.315</b></td>
+                <td><b>0.274</b></td>
+                <td><b>0.14</b></td>
+                <td><b>0.453</b></td>
+                <td><b>0.216</b></td>
+                <td><b>0.337</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>11</p>
+                  <span class="date label label-default">2023</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://github.com/WissingChen/VLCI">VLCI_MIMIC</a>
+                  <p class="institution">SYSU</p>
+                </td>
+                <td><b>0.589</b></td>
+                <td><b>0.12</b></td>
+                <td><b>0.229</b></td>
+                <td><b>0.251</b></td>
+                <td><b>0.101</b></td>
+                <td><b>0.384</b></td>
+                <td><b>0.165</b></td>
+                <td><b>0.33</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>12</p>
+                  <span class="date label label-default">2023</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://github.com/WissingChen/VLCI">VLCI_IU</a>
+                  <p class="institution">SYSU</p>
+                </td>
+                <td><b>0.555</b></td>
+                <td><b>0.106</b></td>
+                <td><b>0.22</b></td>
+                <td><b>0.17</b></td>
+                <td><b>0.094</b></td>
+                <td><b>0.418</b></td>
+                <td><b>0.194</b></td>
+                <td><b>0.339</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>13</p>
+                  <span class="date label label-default">2024</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://github.com/hyn2028/llm-cxr">LLM-CXR</a>
+                  <p class="institution">KAIST</p>
+                </td>
+                <td><b>0.519</b></td>
+                <td><b>0.041</b></td>
+                <td><b>0.162</b></td>
+                <td><b>0.211</b></td>
+                <td><b>0.037</b></td>
+                <td><b>0.321</b></td>
+                <td><b>0.022</b></td>
+                <td><b>0.291</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>14</p>
+                  <span class="date label label-default">2024</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://cdn.openai.com/papers/GPTV_System_Card.pdf">GPT4V</a>
+                  <p class="institution">OpenAI</p>
+                </td>
+                <td><b>0.568</b></td>
+                <td><b>0.081</b></td>
+                <td><b>0.215</b></td>
+                <td><b>0.234</b></td>
+                <td><b>0.082</b></td>
+                <td><b>0.415</b></td>
+                <td><b>0.152</b></td>
+                <td><b>0.339</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>15</p>
+                  <span class="date label label-default">2024</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://github.com/taokz/BiomedGPT">BiomedGPT_IU</a>
+                  <p class="institution">Lehigh University</p>
+                </td>
+                <td><b>0.552</b></td>
+                <td><b>0.022</b></td>
+                <td><b>0.2</b></td>
+                <td><b>0.241</b></td>
+                <td><b>0.056</b></td>
+                <td><b>0.351</b></td>
+                <td><b>0.118</b></td>
+                <td><b>0.32</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>16</p>
+                  <span class="date label label-default">2024</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://huggingface.co/microsoft/maira-2">MAIRA-2</a>
+                  <p class="institution">Microsoft</p>
+                </td>
+                <td><b>0.788</b></td>
+                <td><b>0.163</b></td>
+                <td><b>0.359</b></td>
+                <td><b>0.355</b></td>
+                <td><b>0.189</b></td>
+                <td><b>0.485</b></td>
+                <td><b>0.273</b></td>
+                <td><b>0.352</b></td>
+              </tr>
+        
+            </tbody>
+            <tbody id="validResultsCheXpert" style="display: none;">
+    
+              <tr>
+                <td>
+                  <p>1</p>
+                  <span class="date label label-default">2024</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://github.com/Stanford-AIMI/chexpert-plus">CheXpertPlus_MIMIC</a>
+                  <p class="institution">Stanford</p>
+                </td>
+                <td><b>0.482</b></td>
+                <td><b>0.103</b></td>
+                <td><b>0.002</b></td>
+                <td><b>0.318</b></td>
+                <td><b>0.049</b></td>
+                <td><b>0.429</b></td>
+                <td><b>0.293</b></td>
+                <td><b>0.347</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>2</p>
+                  <span class="date label label-default">2024</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://github.com/Stanford-AIMI/chexpert-plus">CheXpertPlus_CheX*</a>
+                  <p class="institution">Stanford</p>
+                </td>
+                <td><b>0.512</b></td>
+                <td><b>0.142</b></td>
+                <td><b>0.02</b></td>
+                <td><b>0.38</b></td>
+                <td><b>0.07</b></td>
+                <td><b>0.492</b></td>
+                <td><b>0.363</b></td>
+                <td><b>0.353</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>3</p>
+                  <span class="date label label-default">2024</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://github.com/Stanford-AIMI/chexpert-plus">CheXpertPlus_CheX_MIMIC*</a>
+                  <p class="institution">Stanford</p>
+                </td>
+                <td><b>0.511</b></td>
+                <td><b>0.14</b></td>
+                <td><b>0.011</b></td>
+                <td><b>0.388</b></td>
+                <td><b>0.071</b></td>
+                <td><b>0.503</b></td>
+                <td><b>0.382</b></td>
+                <td><b>0.36</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>4</p>
+                  <span class="date label label-default">2024</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://huggingface.co/hyzhou/MedVersa/tree/main">MedVersa</a>
+                  <p class="institution">Harvard</p>
+                </td>
+                <td><b>0.493</b></td>
+                <td><b>0.09</b></td>
+                <td><b>0.013</b></td>
+                <td><b>0.337</b></td>
+                <td><b>0.05</b></td>
+                <td><b>0.452</b></td>
+                <td><b>0.334</b></td>
+                <td><b>0.354</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>5</p>
+                  <span class="date label label-default">2023</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://github.com/chaoyi-wu/RadFM">RadFM</a>
+                  <p class="institution">SJTU</p>
+                </td>
+                <td><b>0.443</b></td>
+                <td><b>0.067</b></td>
+                <td><b>-0.038</b></td>
+                <td><b>0.229</b></td>
+                <td><b>0.027</b></td>
+                <td><b>0.39</b></td>
+                <td><b>0.137</b></td>
+                <td><b>0.34</b></td>
+              </tr>
+        
+              <tr>
+                <td>
+                  <p>6</p>
+                  <span class="date label label-default">2024</span>
+                </td>
+                <td style="word-break:break-word;">
+                  <a class="link" href="https://cdn.openai.com/papers/GPTV_System_Card.pdf">GPT4V</a>
+                  <p class="institution">OpenAI</p>
+                </td>
+                <td><b>0.431</b></td>
+                <td><b>0.055</b></td>
+                <td><b>-0.065</b></td>
+                <td><b>0.208</b></td>
+                <td><b>0.028</b></td>
+                <td><b>0.393</b></td>
+                <td><b>0.182</b></td>
+                <td><b>0.329</b></td>
+              </tr>
+        
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div> -->
+     
+        </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-default navbar-static-bottom footer">
+        <div class="container clearfix">
+        <div class="rightNav">
+            <div>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                <a href="/CRAFT-MD/">CRAFT-MD</a>
+                </li>
+                <li>
+                <a href="https://www.rajpurkarlab.hms.harvard.edu/">Harvard Rajpurkar Lab</a>
+                </li>
+            </ul>
+            </div>
+        </div>
+        </div>
+    </nav>
+    <script src="/ReXrank/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/ReXrank/javascripts/jquery.tablesorter.min.js"></script>
+    <script src="/ReXrank/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+     <script>
+        $(document).ready(function() {
+            // Initialize tablesorter
+            $("#modelTableTest").tablesorter({
+                theme: 'default',
+                headers: {
+                    0: { sorter: false }, // Rank column
+                    1: { sorter: false }  // Model column
+                },
+                sortList: [[2, 1]] // Default sort by RadCliQ-v1 ascending
+            });
+    
+            // Update ranks after sorting
+            function updateRankTest() {
+                $("#modelTableTest tbody:visible tr").each(function(index) {
+                    $(this).find("td:eq(0) p").text(index + 1);
+                });
+            }
+            
+            // Function to sort table based on custom order for clicked column
+            function customSortTest(columnIndex) {
+                var sortOrder = [1,1,1,1,1,1,1,1]; // 示例排序顺序数组
+                var sortDirection = sortOrder[columnIndex - 2]; // 获取点击列对应的排序方向
+                $("#modelTableTest").trigger("sorton", [[[columnIndex, sortDirection]]]);
+            }
+
+            // Detect column header click and apply custom sort
+            $("#modelTableTest th").click(function() {
+                var columnIndex = $(this).index();
+                if (columnIndex > 1) { // 只对第2列及之后的列进行排序
+                    customSortTest(columnIndex);
+                }
+            });
+
+            // Update ranks after table sort ends
+            $("#modelTableTest").bind("sortEnd", function() {
+              updateRankTest();
+            });
+    
+            // Update ranks on page load
+            updateRankTest();
+
+
+            // Initialize tablesorter
+            $("#modelTableIU").tablesorter({
+                theme: 'default',
+                headers: {
+                    0: { sorter: false }, // Rank column
+                    1: { sorter: false }  // Model column
+                },
+                sortList: [[2, 1]] // Default sort by RadCliQ-v1 ascending
+            });
+    
+            // Update ranks after sorting
+            function updateRanksIU() {
+                $("#modelTableIU tbody:visible tr").each(function(index) {
+                    $(this).find("td:eq(0) p").text(index + 1);
+                });
+            }
+
+            // Function to sort table based on custom order for clicked column
+            function customSortIU(columnIndex) {
+                var sortOrder = [1,1,1,1,1,1,1,1]; // 示例排序顺序数组
+                var sortDirection = sortOrder[columnIndex - 2]; // 获取点击列对应的排序方向
+                $("#modelTableIU").trigger("sorton", [[[columnIndex, sortDirection]]]);
+            }
+
+            // Detect column header click and apply custom sort
+            $("#modelTableIU th").click(function() {
+                var columnIndex = $(this).index();
+                if (columnIndex > 1) { // 只对第2列及之后的列进行排序
+                  customSortIU(columnIndex);
+                }
+            });
+    
+            // Update ranks after table sort ends
+            $("#modelTableIU").bind("sortEnd", function() {
+            updateRanksIU();
+            });
+    
+            // Update ranks on page load
+            updateRanksIU();
+            
+            // Initialize tablesorter
+            $("#modelTableCheXpert").tablesorter({
+                theme: 'default',
+                headers: {
+                    0: { sorter: false }, // Rank column
+                    1: { sorter: false }  // Model column
+                },
+                sortList: [[2, 1]] // Default sort by RadCliQ-v1 ascending
+            });
+    
+            // Update ranks after sorting
+            function updateRanksCheXpert() {
+                $("#modelTableCheXpert tbody:visible tr").each(function(index) {
+                    $(this).find("td:eq(0) p").text(index + 1);
+                });
+            }
+    
+            // Function to sort table based on custom order for clicked column
+            function customSortCheXpert(columnIndex) {
+                var sortOrder = [1,1,1,1,1,1,1,1]; // 示例排序顺序数组
+                var sortDirection = sortOrder[columnIndex - 2]; // 获取点击列对应的排序方向
+                $("#modelTableCheXpert").trigger("sorton", [[[columnIndex, sortDirection]]]);
+            }
+
+            // Detect column header click and apply custom sort
+            $("#modelTableCheXpert th").click(function() {
+                var columnIndex = $(this).index();
+                if (columnIndex > 1) { // 只对第2列及之后的列进行排序
+                  customSortCheXpert(columnIndex);
+                }
+            });
+            // Update ranks after table sort ends
+            $("#modelTableCheXpert").bind("sortEnd", function() {
+                updateRanksCheXpert();
+            });
+    
+            // Update ranks on page load
+            updateRanksCheXpert();
+
+            // Initialize tablesorter
+            $("#modelTablePrivate").tablesorter({
+                theme: 'default',
+                headers: {
+                    0: { sorter: false }, // Rank column
+                    1: { sorter: false }  // Model column
+                },
+                sortList: [[2, 1]] // Default sort by RadCliQ-v1 ascending
+            });
+    
+            // Update ranks after sorting
+            function updateRanksPrivate() {
+                $("#modelTablePrivate tbody:visible tr").each(function(index) {
+                    $(this).find("td:eq(0) p").text(index + 1);
+                });
+            }
+    
+            // Function to sort table based on custom order for clicked column
+            function customSortPrivate(columnIndex) {
+                var sortOrder = [1,1,1,1,1,1,1,1]; // 示例排序顺序数组
+                var sortDirection = sortOrder[columnIndex - 2]; // 获取点击列对应的排序方向
+                $("#modelTablePrivate").trigger("sorton", [[[columnIndex, sortDirection]]]);
+            }
+
+            // Detect column header click and apply custom sort
+            $("#modelTablePrivate th").click(function() {
+                var columnIndex = $(this).index();
+                if (columnIndex > 1) { // 只对第2列及之后的列进行排序
+                  customSortPrivate(columnIndex);
+                }
+            });
+            // Update ranks after table sort ends
+            $("#modelTablePrivate").bind("sortEnd", function() {
+                updateRanksPrivate();
+            });
+    
+            // Update ranks on page load
+            updateRanksPrivate();
+
+            // Switch to test results
+            $("#testBtnIU").click(function() {
+                $("#testResultsIU").show();
+                $("#validResultsIU").hide();
+                $(this).removeClass('btn-gray').addClass('btn-black');
+                $("#validBtnIU").removeClass('btn-black').addClass('btn-gray');
+                updateRanksIU(); // Update ranks after switching
+            });
+            $("#testBtnPrivate").click(function() {
+                $("#testResultsPrivate").show();
+                $("#validResultsPrivate").hide();
+                $(this).removeClass('btn-gray').addClass('btn-black');
+                $("#validBtnPrivate").removeClass('btn-black').addClass('btn-gray');
+                updateRanksPrivate(); // Update ranks after switching
+            });
+            $("#testBtnCheXpert").click(function() {
+                $("#testResultsCheXpert").show();
+                $("#validResultsCheXpert").hide();
+                $(this).removeClass('btn-gray').addClass('btn-black');
+                $("#validBtnCheXpert").removeClass('btn-black').addClass('btn-gray');
+                updateRanksCheXpert(); // Update ranks after switching
+            });
+            $("#testBtnMIMIC").click(function() {
+                $("#testResultsMIMIC").show();
+                $("#validResultsMIMIC").hide();
+                $(this).removeClass('btn-gray').addClass('btn-black');
+                $("#validBtnMIMIC").removeClass('btn-black').addClass('btn-gray');
+                updateRankTest(); // Update ranks after switching
+            });
+    
+            // Switch to valid results
+            $("#validBtnIU").click(function() {
+                $("#testResultsIU").hide();
+                $("#validResultsIU").show();
+                $(this).removeClass('btn-gray').addClass('btn-black');
+                $("#testBtnIU").removeClass('btn-black').addClass('btn-gray');
+                updateRanksIU(); // Update ranks after switching
+            });
+            $("#validBtnPrivate").click(function() {
+                $("#testResultsPrivate").hide();
+                $("#validResultsPrivate").show();
+                $(this).removeClass('btn-gray').addClass('btn-black');
+                $("#testBtnPrivate").removeClass('btn-black').addClass('btn-gray');
+                updateRanksPrivate(); // Update ranks after switching
+            });
+            $("#validBtnCheXpert").click(function() {
+                $("#testResultsCheXpert").hide();
+                $("#validResultsCheXpert").show();
+                $(this).removeClass('btn-gray').addClass('btn-black');
+                $("#testBtnCheXpert").removeClass('btn-black').addClass('btn-gray');
+                updateRanksCheXpert(); // Update ranks after switching
+            });
+            $("#validBtnMIMIC").click(function() {
+                $("#testResultsMIMIC").hide();
+                $("#validResultsMIMIC").show();
+                $(this).removeClass('btn-gray').addClass('btn-black');
+                $("#testBtnMIMIC").removeClass('btn-black').addClass('btn-gray');
+                updateRankTest(); // Update ranks after switching
+            });
+          });
+          document.addEventListener('DOMContentLoaded', function() {
+          const urlParams = new URLSearchParams(window.location.search);
+          const message = urlParams.get('message');
+          if (message === 'verified' || message === 'already-verified') {
+              window.location.href = '/explore/login.html?message=' + message;
+          }
+        });
+    </script>
+    
+    <style>
+        /* .btn {
+            margin: 10px;
+            padding: 10px 20px;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        */
+        .btn-black {
+        background-color: #a41034;
+        color: #fff !important;
+        border: 2px solid #a41034;
+        }
+        .btn-gray {
+        background-color: #fff;
+        color: #a41034 !important;
+        border: 2px solid #a41034;
+        }
+
+        .btn-black:hover, .btn-gray:hover {
+        color: #fff !important;
+        } 
+
+        /* .btn-black {
+            background-color: black;
+        }
+    
+        .btn-gray {
+            background-color: gray;
+        }
+        
+        .btn-black:hover, .btn-gray:hover {
+            opacity: 0.8;
+        } */
+    </style>
+    </body>
+    </html>
+    
